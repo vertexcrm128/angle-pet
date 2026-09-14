@@ -1,0 +1,8 @@
+.banner { background: #1a3fa0; padding: 60px 0; }
+.inner { max-width: 1300px; margin: 0 auto; padding: 0 60px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; gap: 8px; flex: 1; min-width: 140px; }
+.num { font-size: clamp(36px, 4vw, 52px); font-weight: 800; color: white; letter-spacing: -0.03em; line-height: 1; }
+.orange { color: #e86700; font-weight: 800; }
+.label { font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+.divider { width: 1px; height: 60px; background: rgba(255,255,255,0.15); flex-shrink: 0; }
+@media(max-width:768px){ .inner { flex-wrap: wrap; gap: 32px; } .divider { display: none; } }

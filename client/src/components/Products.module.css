@@ -1,0 +1,23 @@
+.products { background: #f6f7f9; }
+.header { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 48px; flex-wrap: wrap; }
+.linkArrow { font-size: 13.5px; color: #1a3fa0; text-decoration: none; font-weight: 500; white-space: nowrap; padding-bottom: 8px; cursor: pointer; transition: color 0.2s; }
+.linkArrow:hover { color: #2952c8; }
+.grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.loading { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+.skeleton { height: 320px; background: linear-gradient(90deg,#e2e5ee 25%,#f6f7f9 50%,#e2e5ee 75%); background-size: 200%; animation: shimmer 1.5s infinite; border-radius: 16px; }
+@keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+.card { background: white; border-radius: 16px; border: 1px solid #e2e5ee; overflow: hidden; cursor: pointer; transition: all 0.3s ease; }
+.card:hover { box-shadow: 0 12px 40px rgba(0,0,0,0.1); transform: translateY(-4px); border-color: transparent; }
+.imgWrap { background: #f6f7f9; height: 220px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.card:hover .img { transform: scale(1.05); }
+.info { padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.name { font-size: 15px; font-weight: 600; color: #0d0d0d; margin-bottom: 3px; }
+.range { font-size: 12px; color: #9aa2b4; }
+.arrowBtn { width: 36px; height: 36px; border: 1px solid #e2e5ee; border-radius: 50%; background: white; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.arrowBtn:hover { background: #0d0d0d; color: white; border-color: #0d0d0d; }
+.tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.tagBtn { border: 1px solid #e2e5ee; background: white; border-radius: 100px; padding: 7px 18px; font-size: 13px; cursor: pointer; color: #5c647a; transition: all 0.2s; font-family: inherit; }
+.tagBtn:hover, .tagActive { background: #0d0d0d !important; color: white !important; border-color: #0d0d0d !important; }
+@media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}}

@@ -1,0 +1,13 @@
+{
+  "name": "angel-pet",
+  "version": "1.0.0",
+  "description": "Angel PET Packaging Studio — Full-Stack (React + Express + Firebase)",
+  "scripts": {
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "dev": "start cmd /k \"cd client && npm run dev\" && start cmd /k \"cd server && nodemon index.js\"",
+    "install:all": "cd client && npm install && cd ../server && npm install",
+    "seed": "curl -X POST http://localhost:5000/api/seed"
+  },
+  "keywords": ["pet", "packaging", "react", "express", "firebase"]
+}

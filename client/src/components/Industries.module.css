@@ -1,0 +1,13 @@
+.industries { background: #eef0f5; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; }
+.card { background: white; border: 1px solid #e2e5ee; border-radius: 16px; padding: 28px; cursor: pointer; transition: all 0.25s; }
+.card:hover { border-color: #1a3fa0; box-shadow: 0 8px 32px rgba(26,63,160,0.12); transform: translateY(-3px); }
+.card.loading { animation: shimmer 1.5s infinite; background: linear-gradient(90deg,#e2e5ee 25%,#f6f7f9 50%,#e2e5ee 75%); background-size: 200%; }
+@keyframes shimmer { 0%{background-position:200%} 100%{background-position:-200%} }
+.top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 20px; }
+.icon { width: 44px; height: 44px; background: #e8edf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.num { font-size: 12px; color: #9aa2b4; }
+.name { font-size: 18px; font-weight: 600; color: #0d0d0d; margin-bottom: 5px; }
+.sub { font-size: 12.5px; color: #9aa2b4; }
+@media(max-width:768px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.grid{grid-template-columns:1fr}}
