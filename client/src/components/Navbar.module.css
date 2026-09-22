@@ -1,61 +1,194 @@
+/* =========================================
+   NAVBAR — Premium Animated CSS
+   ========================================= */
+
+/* ── Base ── */
 .navbar {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  height: 72px; background: rgba(255,255,255,0.9);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0,0,0,0.06); transition: box-shadow 0.3s ease;
+  position: fixed; top: 14px; left: 20px; right: 20px; z-index: 1000;
+  height: 62px;
+  /* Transparent at top — merges with hero background */
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  box-shadow: none;
+  transition: box-shadow 0.5s ease, transform 0.4s cubic-bezier(0.4,0,0.2,1),
+              background 0.5s, border-color 0.5s, backdrop-filter 0.5s, top 0.4s;
 }
-.navbar.scrolled { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+/* Scroll down → hide navbar */
+.navbar.hidden { transform: translateY(-120%); }
+/* Scrolled → glassmorphism card appears */
+.navbar.scrolled {
+  box-shadow: 0 8px 40px rgba(0,0,0,0.1);
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border-color: rgba(255,255,255,0.65);
+  top: 10px;
+}
+
+/* ── Animated gradient bar at bottom ── */
+.gradientBar {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, #1a3fa0, #4a6fd4, #e86700, #1a3fa0);
+  background-size: 200% 100%;
+  opacity: 0;
+  transition: opacity 0.4s;
+  animation: gradientSlide 4s linear infinite;
+}
+.navbar.scrolled .gradientBar { opacity: 1; }
+@keyframes gradientSlide { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+
+/* ── Inner ── */
 .inner {
   max-width: 1400px; margin: 0 auto; padding: 0 40px; height: 100%;
   display: flex; align-items: center; gap: 48px;
 }
+
+/* ── Logo ── */
 .logo {
   display: flex; align-items: center; gap: 12px; background: none;
-  border: none; cursor: pointer; flex-shrink: 0; text-decoration: none;
+  border: none; cursor: pointer; flex-shrink: 0;
+  transition: opacity 0.2s;
 }
+.logo:hover { opacity: 0.85; }
 .logoIcon {
-  width: 42px; height: 42px; background: #1a3fa0; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, #1a3fa0 0%, #4a6fd4 100%);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(26,63,160,0.3);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.logo:hover .logoIcon {
+  box-shadow: 0 6px 20px rgba(26,63,160,0.45);
+  transform: scale(1.05);
+}
+/* Spin on click */
+.logoIcon.spin {
+  animation: spinOnce 0.65s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes spinOnce {
+  0%   { transform: rotate(0deg) scale(1); }
+  40%  { transform: rotate(200deg) scale(1.15); }
+  100% { transform: rotate(360deg) scale(1); }
 }
 .logoText { display: flex; flex-direction: column; line-height: 1.15; }
-.logoName { font-size: 15px; font-weight: 600; color: #0d0d0d; letter-spacing: -0.02em; }
-.logoSub { font-size: 9px; font-weight: 500; letter-spacing: 0.12em; color: #9aa2b4; }
-.links { display: flex; align-items: center; gap: 36px; flex: 1; justify-content: center; }
-.navLink {
-  font-size: 14.5px; font-weight: 400; color: #5c647a; background: none;
-  border: none; cursor: pointer; font-family: inherit; position: relative; padding: 4px 0;
-  transition: color 0.2s;
-}
-.navLink::after {
-  content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
-  height: 1.5px; background: #1a3fa0; transform: scaleX(0);
-  transition: transform 0.25s ease; transform-origin: left;
-}
-.navLink:hover { color: #0d0d0d; }
-.navLink:hover::after, .navLink.active::after { transform: scaleX(1); }
-.navLink.active { color: #0d0d0d; }
-.quoteBtn {
-  background: #0d0d0d; color: white; border: none; border-radius: 100px;
-  padding: 10px 24px; font-size: 14px; font-weight: 500; cursor: pointer;
-  flex-shrink: 0; font-family: inherit; transition: background 0.2s, transform 0.2s;
-}
-.quoteBtn:hover { background: #1a3fa0; transform: translateY(-1px); }
-.hamburger {
-  display: none; flex-direction: column; gap: 5px; background: none;
-  border: none; cursor: pointer; padding: 4px; margin-left: auto;
-}
-.hamburger span { display: block; width: 22px; height: 2px; background: #0d0d0d; border-radius: 2px; transition: all 0.3s; }
+.logoName  { font-size: 15px; font-weight: 600; color: #0d0d0d; letter-spacing: -0.02em; }
+.logoSub   { font-size: 9px; font-weight: 500; letter-spacing: 0.12em; color: #9aa2b4; }
 
+/* Nav links color adapt to transparent navbar */
+.navLink {
+  font-size: 14.5px; font-weight: 400; color: #5c647a;
+  background: none; border: none; cursor: pointer;
+  font-family: inherit; position: relative; padding: 4px 0;
+  transition: color 0.25s, transform 0.2s;
+}
+.navLink:hover { color: #0d0d0d; transform: translateY(-1px); }
+.navLink.active { color: #0d0d0d; font-weight: 500; }
+
+/* ── Links wrapper (for indicator positioning) ── */
+.linksWrapper { flex: 1; display: flex; justify-content: center; position: relative; }
+.links {
+  display: flex; align-items: center; gap: 36px;
+  position: relative;
+}
+
+/* ── Sliding indicator ── */
+.indicator {
+  position: absolute; bottom: -26px; left: 0; height: 2px;
+  background: linear-gradient(90deg, #1a3fa0, #4a6fd4);
+  border-radius: 2px;
+  transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1),
+              width 0.4s cubic-bezier(0.34,1.56,0.64,1),
+              opacity 0.3s;
+  pointer-events: none;
+}
+
+/* ── Nav links ── */
+.navLink {
+  font-size: 14.5px; font-weight: 400; color: #5c647a;
+  background: none; border: none; cursor: pointer;
+  font-family: inherit; position: relative; padding: 4px 0;
+  transition: color 0.25s, transform 0.2s;
+}
+.navLink:hover { color: #0d0d0d; transform: translateY(-1px); }
+.navLink.active { color: #0d0d0d; font-weight: 500; }
+
+/* ── Quote CTA button ── */
+.quoteBtn {
+  background: #0d0d0d; color: white; border: none;
+  border-radius: 100px; padding: 10px 24px;
+  font-size: 14px; font-weight: 500; cursor: pointer;
+  flex-shrink: 0; font-family: inherit;
+  position: relative; overflow: hidden;
+  transition: background 0.3s, transform 0.25s cubic-bezier(0.34,1.56,0.64,1),
+              box-shadow 0.3s;
+}
+.quoteBtn:hover {
+  background: #1a3fa0;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 24px rgba(26,63,160,0.35);
+}
+.quoteBtn:active { transform: scale(0.97); }
+.quoteBtnText { position: relative; z-index: 1; }
+/* Sheen sweep on hover */
+.quoteBtnGlow {
+  position: absolute; top: 0; left: -80%;
+  width: 60%; height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.25) 50%, transparent 100%);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+  pointer-events: none;
+}
+.quoteBtn:hover .quoteBtnGlow { left: 130%; }
+
+/* ── Hamburger (morphs to X) ── */
+.hamburger {
+  display: none; flex-direction: column; gap: 5px;
+  background: none; border: none; cursor: pointer;
+  padding: 6px; margin-left: auto; border-radius: 6px;
+  transition: background 0.2s;
+}
+.hamburger:hover { background: rgba(0,0,0,0.05); }
+.hamburger span {
+  display: block; width: 22px; height: 2px;
+  background: #0d0d0d; border-radius: 2px;
+  transition: transform 0.35s cubic-bezier(0.23,1,0.32,1),
+              opacity 0.25s, width 0.3s;
+  transform-origin: center;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile ── */
 @media (max-width: 768px) {
-  .inner { padding: 0 24px; gap: 0; }
+  .navbar { top: 10px; left: 12px; right: 12px; border-radius: 14px; height: 58px; }
+  .inner { padding: 0 20px; gap: 0; }
+  .linksWrapper { display: none; }
   .links {
-    display: none; flex-direction: column; position: fixed;
-    top: 72px; left: 0; right: 0; background: white; padding: 20px 24px 32px;
-    gap: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); z-index: 999;
-    border-top: 1px solid #e2e5ee;
+    display: none; flex-direction: column;
+    position: fixed; top: 82px; left: 12px; right: 12px;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(20px);
+    padding: 20px 24px 32px;
+    border-radius: 14px;
+    gap: 0; box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+    z-index: 999; border: 1px solid rgba(0,0,0,0.06);
+    transform: translateY(-10px); opacity: 0;
+    transition: transform 0.3s, opacity 0.3s;
   }
-  .links.open { display: flex; }
-  .navLink { font-size: 16px; padding: 8px 0; border-bottom: 1px solid #eef0f5; width: 100%; text-align: left; }
+  .links.open {
+    display: flex; transform: translateY(0); opacity: 1;
+  }
+  .navLink {
+    font-size: 16px; padding: 14px 0;
+    border-bottom: 1px solid #eef0f5; width: 100%; text-align: left;
+  }
   .quoteBtn { display: none; }
   .hamburger { display: flex; }
+  .indicator { display: none; }
+  .gradientBar { display: none; }
 }

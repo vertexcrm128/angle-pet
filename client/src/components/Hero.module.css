@@ -1,74 +1,370 @@
+/* =========================================
+   HERO — Full Premium Animation CSS
+   ========================================= */
+
+/* ── Entrance ── */
 .hero {
-  min-height: 100vh; padding-top: 72px;
-  background: linear-gradient(135deg, #f0f3fb 0%, #e8edf8 50%, #edf2ff 100%);
+  min-height: 100vh; padding-top: 90px;
+  background:
+    linear-gradient(135deg, #eef2fc 0%, #e8edf8 40%, #f2f4fb 65%, #f7f5f0 85%, #f5f2ec 100%);
   display: flex; align-items: center; position: relative; overflow: hidden;
+  opacity: 0; transition: opacity 0.6s ease;
 }
+.hero.visible { opacity: 1; }
 .hero::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(ellipse 60% 70% at 65% 50%, rgba(41,82,200,0.06) 0%, transparent 70%);
+  background:
+    radial-gradient(ellipse 55% 80% at 72% 55%, rgba(240,232,215,0.55) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 60% at 80% 30%, rgba(245,240,230,0.4) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 65% 50%, rgba(41,82,200,0.04) 0%, transparent 70%);
+  pointer-events: none;
 }
-.content { flex: 1; padding: 80px 80px 80px 100px; max-width: 700px; position: relative; z-index: 1; }
+
+/* ── Animated blobs ── */
+.blob1, .blob2, .blob3 {
+  position: absolute; border-radius: 50%; filter: blur(80px);
+  pointer-events: none; z-index: 0; opacity: 0.45;
+}
+.blob1 {
+  width: 500px; height: 500px; background: radial-gradient(circle, #c7d7ff 0%, transparent 70%);
+  top: -100px; right: -100px; animation: blobMove1 12s ease-in-out infinite;
+}
+.blob2 {
+  width: 350px; height: 350px; background: radial-gradient(circle, #ffd6b3 0%, transparent 70%);
+  bottom: -80px; left: 30%; animation: blobMove2 15s ease-in-out infinite;
+}
+.blob3 {
+  width: 250px; height: 250px; background: radial-gradient(circle, #b3d4ff 0%, transparent 70%);
+  top: 40%; left: -60px; animation: blobMove3 10s ease-in-out infinite;
+}
+@keyframes blobMove1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-40px,30px) scale(1.1)} 66%{transform:translate(20px,-20px) scale(0.95)} }
+@keyframes blobMove2 { 0%,100%{transform:translate(0,0) scale(1)} 50%{transform:translate(30px,-40px) scale(1.15)} }
+@keyframes blobMove3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(20px,30px)} }
+
+/* ── Content ── */
+.content {
+  flex: 1; padding: 80px 80px 80px 100px; max-width: 700px;
+  position: relative; z-index: 1;
+  opacity: 0; transform: translateX(-40px);
+  transition: opacity 0.8s ease 0.2s, transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.2s;
+}
+.content.slideIn { opacity: 1; transform: translateX(0); }
+
+/* ── Badge ── */
 .badge {
-  display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.85);
-  border: 1px solid #e2e5ee; border-radius: 100px; padding: 6px 16px; font-size: 12.5px;
-  font-weight: 500; color: #5c647a; margin-bottom: 28px; backdrop-filter: blur(8px);
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.9); border: 1px solid #e2e5ee;
+  border-radius: 100px; padding: 6px 16px; font-size: 12.5px;
+  font-weight: 500; color: #5c647a; margin-bottom: 28px;
+  backdrop-filter: blur(8px);
+  animation: badgeIn 0.6s cubic-bezier(0.22,1,0.36,1) 0.5s both;
 }
+@keyframes badgeIn { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
 .badgeDot {
   width: 7px; height: 7px; background: #e86700; border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
 }
-@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.4)} }
+
+/* ── Title ── */
 .title {
-  font-family: 'Playfair Display', Georgia, serif; font-size: clamp(52px, 6vw, 82px);
-  font-weight: 700; line-height: 1.05; color: #0d0d0d; letter-spacing: -0.03em; margin-bottom: 24px;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(52px, 6vw, 82px); font-weight: 700;
+  line-height: 1.05; color: #0d0d0d; letter-spacing: -0.03em; margin-bottom: 24px;
+  animation: titleIn 0.9s cubic-bezier(0.22,1,0.36,1) 0.4s both;
 }
-.title em { font-style: italic; color: #1a3fa0; }
-.desc { font-size: 16px; color: #5c647a; line-height: 1.75; margin-bottom: 40px; max-width: 480px; }
-.actions { display: flex; align-items: center; gap: 16px; margin-bottom: 56px; flex-wrap: wrap; }
+@keyframes titleIn { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+.title em {
+  font-style: italic; color: #1a3fa0;
+  background: linear-gradient(135deg, #1a3fa0, #4a6fd4, #e86700);
+  background-size: 200% auto;
+  -webkit-background-clip: text; background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 4s linear infinite;
+}
+@keyframes shimmer { 0%{background-position:0% center} 100%{background-position:200% center} }
+
+/* ── Desc ── */
+.desc {
+  font-size: 16px; color: #5c647a; line-height: 1.75;
+  margin-bottom: 40px; max-width: 480px;
+  animation: fadeUp 0.8s ease 0.6s both;
+}
+@keyframes fadeUp { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── Buttons ── */
+.actions {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 56px; flex-wrap: wrap;
+  animation: fadeUp 0.8s ease 0.75s both;
+}
 .btnPrimary {
-  display: inline-flex; align-items: center; gap: 8px; background: #0d0d0d; color: white;
-  border: none; padding: 14px 28px; border-radius: 100px; font-size: 14.5px; font-weight: 500;
-  cursor: pointer; font-family: inherit; transition: all 0.25s;
+  display: inline-flex; align-items: center; gap: 8px;
+  background: #0d0d0d; color: white; border: none;
+  padding: 14px 28px; border-radius: 100px;
+  font-size: 14.5px; font-weight: 500; cursor: pointer;
+  font-family: inherit; transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  position: relative; overflow: hidden;
 }
-.btnPrimary:hover { background: #1a3fa0; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(26,63,160,0.3); }
-.arrow { transition: transform 0.2s; }
-.btnPrimary:hover .arrow { transform: translateX(4px); }
+.btnPrimary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, #1a3fa0, #4a6fd4);
+  opacity: 0; transition: opacity 0.3s;
+}
+.btnPrimary:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 32px rgba(26,63,160,0.4); }
+.btnPrimary:hover::before { opacity: 1; }
+.btnPrimary:active { transform: translateY(0) scale(0.97); }
+.arrow { position: relative; z-index: 1; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+.btnPrimary span { position: relative; z-index: 1; }
+.btnPrimary:hover .arrow { transform: translateX(6px); }
 .btnSecondary {
-  display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.8);
-  border: 1px solid #e2e5ee; color: #0d0d0d; padding: 14px 24px; border-radius: 100px;
-  font-size: 14.5px; font-weight: 400; cursor: pointer; font-family: inherit;
-  backdrop-filter: blur(8px); transition: all 0.25s;
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(255,255,255,0.85); border: 1px solid #e2e5ee;
+  color: #0d0d0d; padding: 14px 24px; border-radius: 100px;
+  font-size: 14.5px; font-weight: 400; cursor: pointer;
+  font-family: inherit; backdrop-filter: blur(8px);
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
 }
-.btnSecondary:hover { background: white; box-shadow: 0 4px 16px rgba(0,0,0,0.1); transform: translateY(-1px); }
+.btnSecondary:hover {
+  background: white; box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  transform: translateY(-2px) scale(1.02);
+}
+.btnSecondary:active { transform: scale(0.97); }
 .playIcon {
   width: 28px; height: 28px; background: #e86700; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: white; flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
 }
-.stats { display: flex; align-items: center; gap: 32px; padding-top: 32px; border-top: 1px solid #e2e5ee; }
+.btnSecondary:hover .playIcon { transform: scale(1.2) rotate(15deg); }
+
+/* ── Stats (animated counters) ── */
+.stats {
+  display: flex; align-items: center; gap: 32px;
+  padding-top: 32px; border-top: 1px solid #e2e5ee;
+  animation: fadeUp 0.8s ease 0.95s both;
+}
 .stat { display: flex; flex-direction: column; gap: 4px; }
-.statNum { font-size: 26px; font-weight: 700; color: #0d0d0d; letter-spacing: -0.03em; line-height: 1; }
+.statNum {
+  font-size: 26px; font-weight: 700; color: #0d0d0d;
+  letter-spacing: -0.03em; line-height: 1;
+  transition: color 0.3s;
+}
+.stat:hover .statNum { color: #1a3fa0; }
 .statLabel { font-size: 11.5px; color: #9aa2b4; }
 .statDivider { width: 1px; height: 36px; background: #e2e5ee; }
-.visual { flex: 1; position: relative; display: flex; align-items: center; justify-content: center; min-height: 520px; padding: 60px 60px 60px 0; }
-.bottleWrap { position: relative; z-index: 2; animation: float 5s ease-in-out infinite; }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
-.bottle { width: 320px; max-width: 90%; object-fit: contain; filter: drop-shadow(0 30px 60px rgba(26,63,160,0.2)); }
-.tag {
-  position: absolute; display: flex; align-items: center; gap: 8px; padding: 8px 16px;
-  border-radius: 100px; font-size: 12px; font-weight: 500; box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  animation: floatTag 4s ease-in-out infinite; white-space: nowrap;
+
+/* ── Visual (right side) ── */
+.visual {
+  flex: 1; position: relative; display: flex;
+  align-items: center; justify-content: center;
+  min-height: 520px; padding: 60px 60px 60px 0;
+  opacity: 0; transform: translateX(40px);
+  transition: opacity 0.8s ease 0.3s, transform 0.8s cubic-bezier(0.22,1,0.36,1) 0.3s;
+  /* Warm gradient to match hero right-side and bottle colour */
+  background:
+    radial-gradient(ellipse 70% 75% at 60% 50%, rgba(245,242,238,0.6) 0%, transparent 80%);
 }
+.visual.slideInRight { opacity: 1; transform: translateX(0); }
+
+/* ── Bottle Wrapper ── */
+.bottleWrap {
+  position: relative; z-index: 2; cursor: pointer;
+  animation: float 5s ease-in-out infinite;
+  transition: transform 0.15s ease;
+  will-change: transform;
+  /* No mask needed — SVG bottle is natively transparent */
+}
+.bottleWrap:hover .bottleSvg {
+  filter: drop-shadow(0 24px 60px rgba(26,63,160,0.22));
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+
+/* Tap squeeze animation */
+.bottleWrap.tapped {
+  animation: squish 0.45s cubic-bezier(0.36,0.07,0.19,0.97);
+}
+@keyframes squish {
+  0%  { transform: scale(1,1); }
+  20% { transform: scale(0.88, 1.12); }
+  40% { transform: scale(1.08, 0.92); }
+  60% { transform: scale(0.96, 1.04); }
+  80% { transform: scale(1.02, 0.98); }
+  100%{ transform: scale(1,1); }
+}
+
+/* ── Glow ring ── */
+.glowRing {
+  position: absolute; inset: -20px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(26,63,160,0.18) 0%, transparent 65%);
+  animation: glowPulse 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes glowPulse { 0%,100%{opacity:0.6;transform:scale(1)} 50%{opacity:1;transform:scale(1.08)} }
+
+/* ── SVG Bottle (transparent — no white box) ── */
+.bottleSvg {
+  width: 280px; max-width: 90%;
+  display: block;
+  filter: drop-shadow(0 18px 50px rgba(26,63,160,0.14));
+  transition: filter 0.3s;
+  -webkit-user-drag: none;
+}
+
+/* ── Background concentric circles ── */
+.bgCircles {
+  position: absolute;
+  width: 580px; height: 580px;
+  top: 50%; left: 50%;
+  transform: translate(-48%, -50%);
+  z-index: 0;
+  pointer-events: none;
+  animation: ringPulse 8s ease-in-out infinite;
+}
+@keyframes ringPulse {
+  0%,100% { opacity: 0.8; transform: translate(-48%,-50%) scale(1); }
+  50%     { opacity: 1;   transform: translate(-48%,-50%) scale(1.04); }
+}
+
+/* ── Tap hint ── */
+.tapHint {
+  position: absolute; bottom: -32px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: #9aa2b4; font-weight: 500;
+  white-space: nowrap; pointer-events: none;
+  animation: hintBob 2s ease-in-out infinite;
+}
+.tapIcon { font-size: 14px; animation: hintBob 1.5s ease-in-out infinite; }
+@keyframes hintBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+
+/* ── Ripple effect (touch) ── */
+.ripple {
+  position: absolute; border-radius: 50%;
+  width: 0; height: 0;
+  background: radial-gradient(circle, rgba(26,63,160,0.35) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  animation: rippleOut 0.8s cubic-bezier(0,0,0.2,1) forwards;
+  pointer-events: none;
+}
+@keyframes rippleOut {
+  0%   { width: 0;     height: 0;     opacity: 1; }
+  100% { width: 300px; height: 300px; opacity: 0; }
+}
+
+/* ── Water ripple (full bottle tap) ── */
+.waterRipple {
+  position: absolute; inset: 0;
+  border-radius: 40% 40% 48% 48%;
+  border: 3px solid rgba(26,63,160,0.4);
+  animation: waterExpand 0.5s ease-out forwards;
+  pointer-events: none;
+}
+@keyframes waterExpand {
+  0%   { transform: scale(0.9); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+/* ── Tags ── */
+.tag {
+  position: absolute; display: flex; align-items: center; gap: 8px;
+  padding: 8px 16px; border-radius: 100px; font-size: 12px; font-weight: 500;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  animation: floatTag 4s ease-in-out infinite; white-space: nowrap;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s;
+  cursor: default;
+}
+.tag:hover { transform: scale(1.08) translateY(-4px) !important; box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
 .tagFood { top: 10%; left: -20px; background: #1a3fa0; color: white; }
-.tagCap { top: 45%; right: -40px; background: #e86700; color: white; animation-delay: 1.5s; }
+.tagCap  { top: 45%; right: -40px; background: #e86700; color: white; animation-delay: 1.5s; }
 .tagLeak { bottom: 12%; left: 10px; background: #0a1628; color: white; animation-delay: 0.8s; }
 .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.6); flex-shrink: 0; }
 .dotOrange { background: #e86700; }
-@keyframes floatTag { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
-.bgBottles { position: absolute; inset: 0; z-index: 0; }
-.bgBottle { position: absolute; background: rgba(26,63,160,0.06); border-radius: 50% 50% 45% 45%/60% 60% 40% 40%; }
-.b1 { width: 60px; height: 120px; top: 10%; right: 20%; transform: rotate(15deg); animation: bgFloat 7s ease-in-out infinite; }
-.b2 { width: 45px; height: 95px; bottom: 15%; right: 10%; transform: rotate(-10deg); animation: bgFloat 9s ease-in-out infinite 2s; }
-.b3 { width: 35px; height: 75px; top: 50%; right: 5%; transform: rotate(25deg); animation: bgFloat 6s ease-in-out infinite 1s; }
-@keyframes bgFloat { 0%,100%{transform:translateY(0) rotate(15deg)} 50%{transform:translateY(-12px) rotate(15deg)} }
-@media(max-width:1024px){.content{padding:80px 40px 80px 60px}}
-@media(max-width:768px){.hero{flex-direction:column}.content{padding:60px 24px 40px;max-width:100%}.visual{padding:0 24px 40px;min-height:320px}.bottle{width:220px}}
+@keyframes floatTag { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+
+/* ── Background silhouette bottles ── */
+.bgBottles { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+
+/* Each bgBottle is an SVG-path bottle shape made with clip-path */
+.bgBottle {
+  position: absolute;
+  background: rgba(26,63,160,0.055);
+  /* Bottle shape via clip-path */
+  clip-path: polygon(
+    38% 0%, 62% 0%,
+    65% 8%, 70% 12%, 70% 18%,
+    66% 22%, 66% 25%,
+    72% 30%, 72% 90%,
+    68% 96%, 60% 100%,
+    40% 100%, 32% 96%,
+    28% 90%, 28% 30%,
+    34% 25%, 34% 22%,
+    30% 18%, 30% 12%,
+    35% 8%
+  );
+}
+.b1 {
+  width: 72px; height: 170px;
+  top: 5%; right: 22%;
+  opacity: 0.9;
+  animation: bgFloat 7s ease-in-out infinite;
+  background: rgba(26,63,160,0.07);
+}
+.b2 {
+  width: 56px; height: 140px;
+  bottom: 8%; right: 8%;
+  opacity: 0.8;
+  animation: bgFloat 9s ease-in-out infinite 2s;
+  background: rgba(26,63,160,0.055);
+}
+.b3 {
+  width: 44px; height: 110px;
+  top: 48%; right: 4%;
+  opacity: 0.7;
+  animation: bgFloat 6s ease-in-out infinite 1s;
+  background: rgba(26,63,160,0.045);
+}
+/* Extra ghost bottles at far left */
+.b4 {
+  width: 38px; height: 95px;
+  bottom: 18%; left: 6%;
+  opacity: 0.5;
+  animation: bgFloat 8s ease-in-out infinite 0.5s;
+  background: rgba(26,63,160,0.04);
+}
+.b5 {
+  width: 50px; height: 125px;
+  top: 60%; left: 18%;
+  opacity: 0.4;
+  animation: bgFloat 11s ease-in-out infinite 3s;
+  background: rgba(26,63,160,0.035);
+}
+@keyframes bgFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-16px)} }
+
+/* ── Floating particles ── */
+.particle {
+  position: absolute; border-radius: 50%; pointer-events: none;
+  width: calc(4px + var(--i) * 2px);
+  height: calc(4px + var(--i) * 2px);
+  background: rgba(26,63,160, calc(0.08 + var(--i) * 0.03));
+  left: calc(10% + var(--i) * 10%);
+  top: calc(20% + var(--i) * 8%);
+  animation: particleDrift calc(6s + var(--i) * 1.5s) ease-in-out infinite;
+  animation-delay: calc(var(--i) * 0.7s);
+}
+@keyframes particleDrift {
+  0%,100% { transform: translate(0,0) scale(1); opacity: 0.5; }
+  33%  { transform: translate(20px,-30px) scale(1.2); opacity: 1; }
+  66%  { transform: translate(-15px,20px) scale(0.8); opacity: 0.3; }
+}
+
+/* ── Responsive ── */
+@media(max-width:1024px) { .content{padding:80px 40px 80px 60px} }
+@media(max-width:768px) {
+  .hero { flex-direction: column; }
+  .content { padding:60px 24px 40px; max-width:100%; }
+  .visual { padding:0 24px 60px; min-height:340px; }
+  .bottle { width: 220px; }
+  .tapHint { bottom: -28px; }
+}
