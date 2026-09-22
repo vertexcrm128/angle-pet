@@ -1,11 +1,14 @@
 // Axios API service for Angel PET backend
+// - Local dev: uses Vite proxy → http://localhost:5000/api
+// - Production (Vercel): uses relative /api (same domain, Vercel routing handles it)
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
 
 const api = axios.create({
   baseURL: API_BASE,
-  timeout: 10000,
+  timeout: 15000,
   headers: { 'Content-Type': 'application/json' },
 });
 
@@ -19,18 +22,18 @@ api.interceptors.response.use(
 );
 
 // Products
-export const getProducts = (category) =>
+export const getProducts    = (category) =>
   api.get('/products', { params: category ? { category } : {} });
 
 export const getProductById = (id) => api.get(`/products/${id}`);
 
 // Industries
-export const getIndustries = () => api.get('/industries');
+export const getIndustries  = () => api.get('/industries');
 
 // Quotes
-export const submitQuote = (data) => api.post('/quotes', data);
+export const submitQuote    = (data) => api.post('/quotes', data);
 
 // Subscribers
-export const subscribe = (email) => api.post('/subscribers', { email });
+export const subscribe      = (email) => api.post('/subscribers', { email });
 
 export default api;
